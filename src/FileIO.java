@@ -1,22 +1,26 @@
 import java.io.*;
 public class FileIO {
-
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		File file = new File("10x10.txt");
+	
+	private String line;
+	
+	public void loadMaze(String location) throws IOException {
+		File file = new File(location);
 		String path = file.getAbsolutePath();
 		file = new File(path);
 		FileReader fileIn = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileIn);
 		StringBuffer stringBuffer = new StringBuffer();
-		String line;
-		while ((line = bufferedReader.readLine()) != null) {
-			stringBuffer.append(line);
+		while ((this.line = bufferedReader.readLine()) != null) {
+			stringBuffer.append(this.line);
 			stringBuffer.append("\n");
 		}
 		fileIn.close();
-		System.out.println("Stuff!");
-		System.out.println(stringBuffer.toString());
 	}
-
+	
+	public void printString() {
+		System.out.println(this.line);
+	}
+	
+	public static void main(String[] args) {
+	}
 }
