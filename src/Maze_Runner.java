@@ -111,6 +111,7 @@ public class Maze_Runner {
 							.getHeight() - 35);
 					graphics.setVisible(true);
 					graphics.repaint();
+					graphics.checkSize();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
