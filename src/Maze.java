@@ -1,5 +1,11 @@
-public class Maze extends MazeGraphics {
-	private static final long serialVersionUID = 8704517328335993932L;
+public class Maze {
+	private int row, col;
+	private int[][] maze;
+
+	final static int WALL = 0;
+	final static int UNEXPLORED = 1;
+	final static int VISITED = 2;
+	final static int PATH = 3;
 
 	public Maze(String raw) {
 		String[] rows = raw.split("\n");
@@ -16,7 +22,13 @@ public class Maze extends MazeGraphics {
 			}
 		}
 	}
-	
+
+	public int getRow() { return this.row; }
+	public int getCol() { return this.col; }
+	public int getMaze(int i, int j) { return this.maze[i][j]; }
+
+	public void setMaze(int i, int j, int value) { this.maze[i][j] = value; }
+
 	public void printString() {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {

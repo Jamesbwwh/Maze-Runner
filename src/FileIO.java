@@ -1,13 +1,10 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileIO {
-	private String location;
-
-	public FileIO(String str) {
-		location = str;
-	}
-
-	public String loadMaze() throws IOException {
+	public static String loadMaze(String location) throws IOException {
 		File file = new File(location);
 		String path = file.getAbsolutePath();
 		file = new File(path);
@@ -20,7 +17,6 @@ public class FileIO {
 			stringBuffer.append(line);
 			stringBuffer.append("\n");
 		}
-		// System.out.println(stringBuffer.toString());
 		bufferedReader.close();
 		return stringBuffer.toString();
 	}

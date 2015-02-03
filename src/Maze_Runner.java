@@ -1,4 +1,3 @@
-import java.io.*;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
 
@@ -14,6 +13,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class Maze_Runner {
 
@@ -83,25 +83,21 @@ public class Maze_Runner {
 
 	private class fileEventHandler implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			FileDialog fd = new FileDialog(new JFrame(), "Choose a file",
-					FileDialog.LOAD);
+			FileDialog fd = new FileDialog(new JFrame(), "Choose a file",FileDialog.LOAD);
 			fd.setFile("*.txt");
 			fd.setVisible(true);
 			String filename = fd.getFile();
 			if (filename == null)
 				return;
 			else {
-				FileIO file = new FileIO(filename);
 				try {
-					Maze maze = new Maze(file.loadMaze());
-					frmMazeRunner.getContentPane().add(maze,
-							BorderLayout.CENTER);
-					maze.setBounds(0, 35, frmMazeRunner.getContentPane()
-							.getWidth(), frmMazeRunner.getContentPane()
-							.getHeight() - 35);
-					maze.setVisible(true);
-					maze.repaint();
-					maze.canvasSize();
+					Maze maze = new Maze(FileIO.loadMaze(filename));
+					MazeGraphics mg = new MazeGraphics(maze);
+					frmMazeRunner.getContentPane().add(mg,BorderLayout.CENTER);
+					mg.setBounds(0, 35, frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight() - 35);
+					mg.setVisible(true);
+					mg.repaint();
+					mg.canvasSize();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
