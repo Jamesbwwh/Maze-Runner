@@ -1,7 +1,6 @@
 import java.io.*;
 
 public class FileIO {
-
 	private String location;
 
 	public FileIO(String str) {
@@ -24,11 +23,5 @@ public class FileIO {
 		// System.out.println(stringBuffer.toString());
 		bufferedReader.close();
 		return stringBuffer.toString();
-	}
-
-	public void printString() {
-	}
-
-	public static void main(String[] args) {
 	}
 }

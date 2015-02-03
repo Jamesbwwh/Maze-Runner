@@ -1,15 +1,5 @@
-import java.awt.Color;
-
-
-public class Maze {
-	int row, col, width, height, cellWidth, cellHeight;
-	int[][] maze;
-
-	final static int WALL = 0;
-	final static int UNEXPLORED = 1;
-	final static int VISITED = 2;
-	final static int PATH = 3;
-	Color[] color = { Color.white, Color.black, Color.yellow, Color.red };
+public class Maze extends MazeGraphics {
+	private static final long serialVersionUID = 8704517328335993932L;
 
 	public Maze(String raw) {
 		String[] rows = raw.split("\n");
@@ -35,10 +25,4 @@ public class Maze {
 			System.out.println();
 		}
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

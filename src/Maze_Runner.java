@@ -19,9 +19,6 @@ public class Maze_Runner {
 
 	private JFrame frmMazeRunner;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -35,16 +32,10 @@ public class Maze_Runner {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public Maze_Runner() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frmMazeRunner = new JFrame();
 		frmMazeRunner.setTitle("Maze Runner");
@@ -102,18 +93,16 @@ public class Maze_Runner {
 			else {
 				FileIO file = new FileIO(filename);
 				try {
-					MazeGraphics graphics = new MazeGraphics(file.loadMaze());
-					// graphics.printString();
-					frmMazeRunner.getContentPane().add(graphics,
+					Maze maze = new Maze(file.loadMaze());
+					frmMazeRunner.getContentPane().add(maze,
 							BorderLayout.CENTER);
-					graphics.setBounds(0, 35, frmMazeRunner.getContentPane()
+					maze.setBounds(0, 35, frmMazeRunner.getContentPane()
 							.getWidth(), frmMazeRunner.getContentPane()
 							.getHeight() - 35);
-					graphics.setVisible(true);
-					graphics.repaint();
-					graphics.checkSize();
+					maze.setVisible(true);
+					maze.repaint();
+					maze.canvasSize();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
