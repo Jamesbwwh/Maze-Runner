@@ -1,5 +1,6 @@
 import java.io.*;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -47,7 +48,7 @@ public class Maze_Runner {
 	private void initialize() {
 		frmMazeRunner = new JFrame();
 		frmMazeRunner.setTitle("Maze Runner");
-		frmMazeRunner.setBounds(100, 100, 500, 500);
+		frmMazeRunner.setSize(600, 600);
 		frmMazeRunner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -91,17 +92,29 @@ public class Maze_Runner {
 
 	private class fileEventHandler implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			FileIO file = new FileIO("10x10.txt");
-			try {
-				MazeGraphics graphics = new MazeGraphics(file.loadMaze());
-				// graphics.printString();
-				frmMazeRunner.add(graphics);
-				graphics.setBounds(100, 100, 250, 250);
-				graphics.setVisible(true);
-				graphics.repaint();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			FileDialog fd = new FileDialog(new JFrame(), "Choose a file",
+					FileDialog.LOAD);
+			fd.setFile("*.txt");
+			fd.setVisible(true);
+			String filename = fd.getFile();
+			if (filename == null)
+				return;
+			else {
+				FileIO file = new FileIO(filename);
+				try {
+					MazeGraphics graphics = new MazeGraphics(file.loadMaze());
+					// graphics.printString();
+					frmMazeRunner.getContentPane().add(graphics,
+							BorderLayout.CENTER);
+					graphics.setBounds(0, 35, frmMazeRunner.getContentPane()
+							.getWidth(), frmMazeRunner.getContentPane()
+							.getHeight() - 35);
+					graphics.setVisible(true);
+					graphics.repaint();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
