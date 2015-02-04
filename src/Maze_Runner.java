@@ -79,8 +79,9 @@ public class Maze_Runner {
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				maze.setMaze(1, 1, Maze.PATH);
-				mazeGraphics.repaint();
+				//maze.printString();
+				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
+				dfs.solveMaze(dfs.getGriever().getRow(), dfs.getGriever().getCol());
 			}
 		});
 		toolBar.add(btnRun);
@@ -112,7 +113,6 @@ public class Maze_Runner {
 					mazeGraphics = new MazeGraphics(maze);
 					frmMazeRunner.getContentPane().add(mazeGraphics,BorderLayout.CENTER);
 					mazeGraphics.setBounds(0, 35, frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight() - 35);
-					Glader glader = new Glader(maze);
 					mazeGraphics.canvasSize();
 					mazeGraphics.repaint();
 				} catch (IOException e) {

@@ -1,14 +1,23 @@
 public class DepthFirstSearch {
-	private Maze theMaze = null;
-	private Glader theGlader = null;
+	private MazeGraphics theGraphics;
+	private Maze theMaze;
+	private Glader theGlader;
+	private Griever theGriever;
 
-	public DepthFirstSearch() {
-		
+	public DepthFirstSearch(Maze maze, MazeGraphics mg) {
+		theGraphics = mg;
+		theMaze = maze;
+		theGlader = new Glader(theMaze);
+		theGriever = new Griever(theMaze);
+		theGraphics.repaint();
 	}
 
 	public boolean solveMaze(int row, int col) {
+		//System.out.println(theMaze.getMaze(row, col));
 		if (theMaze.getMaze(row, col) == Maze.UNEXPLORED) {
 			theMaze.setMaze(row, col, Maze.PATH); // Cell Assignment
+			//try { Thread.sleep(200); } catch (Exception ex) { }
+			theGraphics.repaint();
 
 			// Path has reached goal.
 			if (row == theGlader.getRow() && col == theGlader.getCol())
@@ -20,7 +29,11 @@ public class DepthFirstSearch {
 
 			// Maze can't be solved from this cell, so backtrack out of the cell.
 			theMaze.setMaze(row, col, Maze.VISITED); // Cell Assignment
+			//try { Thread.sleep(200); } catch (Exception ex) { }
+			theGraphics.repaint();
 		}
 		return false;
 	}
+
+	public Griever getGriever() { return theGriever; }
 }
