@@ -6,6 +6,8 @@ public class Maze {
 	final static int UNEXPLORED = 1;
 	final static int VISITED = 2;
 	final static int PATH = 3;
+	final static int GLADER = 4;
+	final static int GRIEVER = 5;
 
 	public Maze(String raw) {
 		String[] rows = raw.split("\n");

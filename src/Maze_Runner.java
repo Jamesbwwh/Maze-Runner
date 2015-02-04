@@ -18,6 +18,8 @@ import java.io.IOException;
 public class Maze_Runner {
 
 	private JFrame frmMazeRunner;
+	private MazeGraphics mazeGraphics;
+	private Maze maze;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -75,14 +77,29 @@ public class Maze_Runner {
 		toolBar.add(btnFile);
 
 		JButton btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				maze.setMaze(1, 1, Maze.PATH);
+				mazeGraphics.repaint();
+			}
+		});
 		toolBar.add(btnRun);
 
 		JButton btnStop = new JButton("Stop");
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				maze.setMaze(1, 1, Maze.VISITED);
+				mazeGraphics.repaint();
+			}
+		});
 		toolBar.add(btnStop);
 	}
 
 	private class fileEventHandler implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
+			if (maze != null) {
+				frmMazeRunner.getContentPane().remove(mazeGraphics);
+			}
 			FileDialog fd = new FileDialog(new JFrame(), "Choose a file",FileDialog.LOAD);
 			fd.setFile("*.txt");
 			fd.setVisible(true);
@@ -91,13 +108,13 @@ public class Maze_Runner {
 				return;
 			else {
 				try {
-					Maze maze = new Maze(FileIO.loadMaze(filename));
-					MazeGraphics mg = new MazeGraphics(maze);
-					frmMazeRunner.getContentPane().add(mg,BorderLayout.CENTER);
-					mg.setBounds(0, 35, frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight() - 35);
-					mg.setVisible(true);
-					mg.repaint();
-					mg.canvasSize();
+					maze = new Maze(FileIO.loadMaze(filename));
+					mazeGraphics = new MazeGraphics(maze);
+					frmMazeRunner.getContentPane().add(mazeGraphics,BorderLayout.CENTER);
+					mazeGraphics.setBounds(0, 35, frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight() - 35);
+					Glader glader = new Glader(maze);
+					mazeGraphics.canvasSize();
+					mazeGraphics.repaint();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
