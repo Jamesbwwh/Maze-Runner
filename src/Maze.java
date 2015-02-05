@@ -27,7 +27,10 @@ public class Maze {
 
 	public int getRow() { return this.row; }
 	public int getCol() { return this.col; }
-	public int getMaze(int i, int j) { return this.maze[i][j]; }
+	public int getMaze(int i, int j) {
+		if (i >= 0 && j >= 0 && i < row && j < col) return this.maze[i][j];
+		else return -1;
+		}
 
 	public void setMaze(int i, int j, int value) { this.maze[i][j] = value; }
 

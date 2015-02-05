@@ -14,14 +14,14 @@ public class DepthFirstSearch {
 
 	public boolean solveMaze(int row, int col) {
 		//System.out.println(theMaze.getMaze(row, col));
-		if (theMaze.getMaze(row, col) == Maze.UNEXPLORED) {
+		switch (theMaze.getMaze(row, col)) {
+		case Maze.GLADER:
+			return true;
+		case Maze.UNEXPLORED:
+		case Maze.GRIEVER:
 			theMaze.setMaze(row, col, Maze.PATH); // Cell Assignment
 			//try { Thread.sleep(200); } catch (Exception ex) { }
 			theGraphics.repaint();
-
-			// Path has reached goal.
-			if (row == theGlader.getRow() && col == theGlader.getCol())
-				return true;
 
 			// Try to solve maze by extending path in each possible direction.
 			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
@@ -31,8 +31,9 @@ public class DepthFirstSearch {
 			theMaze.setMaze(row, col, Maze.VISITED); // Cell Assignment
 			//try { Thread.sleep(200); } catch (Exception ex) { }
 			theGraphics.repaint();
+		default:
+			return false;
 		}
-		return false;
 	}
 
 	public Griever getGriever() { return theGriever; }

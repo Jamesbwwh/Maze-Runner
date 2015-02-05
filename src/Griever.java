@@ -5,8 +5,8 @@ public class Griever {
 	public Griever(Maze maze) {
 		theMaze = maze;
 		do {
-			row = (int)(Math.random() * 10);
-			col = (int)(Math.random() * 10);
+			row = (int)(Math.random() * maze.getRow());
+			col = (int)(Math.random() * maze.getCol());
 		} while (theMaze.getMaze(row, col) == Maze.WALL);
 		theMaze.setMaze(row, col, Maze.GRIEVER);
 	}
