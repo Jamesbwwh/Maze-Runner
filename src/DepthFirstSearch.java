@@ -1,4 +1,4 @@
-public class DepthFirstSearch {
+public class DepthFirstSearch implements Runnable {
 	private MazeGraphics theGraphics;
 	private Maze theMaze;
 	private Glader theGlader;
@@ -9,7 +9,6 @@ public class DepthFirstSearch {
 		theMaze = maze;
 		theGlader = new Glader(theMaze);
 		theGriever = new Griever(theMaze);
-		theGraphics.repaint();
 	}
 
 	public boolean solveMaze(int row, int col) {
@@ -20,8 +19,9 @@ public class DepthFirstSearch {
 		case Maze.UNEXPLORED:
 		case Maze.GRIEVER:
 			theMaze.setMaze(row, col, Maze.PATH); // Cell Assignment
-			//try { Thread.sleep(200); } catch (Exception ex) { }
-			theGraphics.repaint();
+			theGraphics.paintComponents(theGraphics.getGraphics());
+			theGraphics.update(theGraphics.getGraphics());
+			try { Thread.sleep(50); } catch (Exception ex) { }
 
 			// Try to solve maze by extending path in each possible direction.
 			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
@@ -29,12 +29,17 @@ public class DepthFirstSearch {
 
 			// Maze can't be solved from this cell, so backtrack out of the cell.
 			theMaze.setMaze(row, col, Maze.VISITED); // Cell Assignment
-			//try { Thread.sleep(200); } catch (Exception ex) { }
-			theGraphics.repaint();
+			theGraphics.paintComponents(theGraphics.getGraphics());
+			theGraphics.update(theGraphics.getGraphics());
+			try { Thread.sleep(50); } catch (Exception ex) { }
 		default:
 			return false;
 		}
 	}
 
 	public Griever getGriever() { return theGriever; }
+
+	public void run() {
+		solveMaze(theGriever.getRow(), theGriever.getCol());
+	}
 }
