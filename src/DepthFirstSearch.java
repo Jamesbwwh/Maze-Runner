@@ -3,6 +3,7 @@ public class DepthFirstSearch implements Runnable {
 	private Maze theMaze;
 	private Glader theGlader;
 	private Griever theGriever;
+	private int counter;
 
 	public DepthFirstSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
@@ -16,6 +17,7 @@ public class DepthFirstSearch implements Runnable {
 		case Maze.GLADER:
 			return true;
 		case Maze.UNEXPLORED:
+			counter++;
 			theMaze.setMaze(row, col, Maze.GRIEVER);
 			MazeGraphics.updateGraphics(theGraphics);
 			theMaze.setMaze(row, col, Maze.PATH);
@@ -25,6 +27,7 @@ public class DepthFirstSearch implements Runnable {
 			// Backtrack
 			theMaze.setMaze(row, col, Maze.VISITED);
 			MazeGraphics.updateGraphics(theGraphics);
+			counter++;
 		default:
 			return false;
 		}
