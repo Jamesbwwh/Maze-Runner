@@ -3,6 +3,7 @@ public class AStarSearch implements Runnable {
 	private Maze theMaze;
 	private Glader theGlader;
 	private Griever theGriever;
+	private int counter;
 
 	public AStarSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
@@ -11,29 +12,47 @@ public class AStarSearch implements Runnable {
 		theGriever = new Griever(theMaze);
 	}
 
-	public boolean solveMaze(int row, int col) {
-		switch (theMaze.getMaze(row, col)) {
-		case Maze.GLADER:
-			return true;
-		case Maze.UNEXPLORED:
-			theMaze.setMaze(row, col, Maze.GRIEVER);
-			MazeGraphics.updateGraphics(theGraphics);
-			theMaze.setMaze(row, col, Maze.PATH);
-			// Recursion
-			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
-				return true;
-			// Backtrack
-			theMaze.setMaze(row, col, Maze.VISITED);
-			MazeGraphics.updateGraphics(theGraphics);
-		default:
-			return false;
+	public void solveMaze(int row, int col) {
+		int tmp = 0;
+		// Check Top
+		if (theMaze.getMaze(row - 1, col) != Maze.WALL)
+			tmp++;
+		// Check Left
+		if (theMaze.getMaze(row, col - 1) != Maze.WALL)
+			tmp++;
+		// Check Bottom
+		if (theMaze.getMaze(row + 1, col) != Maze.WALL)
+			tmp++;
+		// Check Right
+		if (theMaze.getMaze(row, col + 1) != Maze.WALL)
+			tmp++;
+		if (tmp > 1) {
+			int distx = row - theGlader.getRow();
+			int disty = col - theGlader.getCol();
 		}
+//		switch (theMaze.getMaze(row, col)) {
+//		case Maze.GLADER:
+//			return true;
+//		case Maze.UNEXPLORED:
+//			counter++;
+//			theMaze.setMaze(row, col, Maze.GRIEVER);
+//			MazeGraphics.updateGraphics(theGraphics);
+//			theMaze.setMaze(row, col, Maze.PATH);
+//			// Recursion
+//			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
+//				return true;
+//			// Backtrack
+//			theMaze.setMaze(row, col, Maze.VISITED);
+//			MazeGraphics.updateGraphics(theGraphics);
+//			counter++;
+//		default:
+//			return false;
+//		}
 	}
 
 	public Griever getGriever() { return theGriever; }
 
 	public void run() {
-		theMaze.setMaze(theGriever.getRow(), theGriever.getCol(), Maze.UNEXPLORED);
 		solveMaze(theGriever.getRow(), theGriever.getCol());
 	}
 }

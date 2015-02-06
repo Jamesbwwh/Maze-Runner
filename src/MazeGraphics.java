@@ -52,8 +52,8 @@ public class MazeGraphics extends JPanel {
 	public void canvasSize() {
 		left = 0;
 		top = 35;
-		width = getWidth();
-		height = getHeight();
+		width = getWidth() - left;
+		height = getHeight() - top;
 		cellWidth = width / theMaze.getCol();
 		cellHeight = height / theMaze.getRow();
 	}

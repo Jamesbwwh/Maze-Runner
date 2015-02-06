@@ -37,6 +37,7 @@ public class DepthFirstSearch implements Runnable {
 
 	public void run() {
 		theMaze.setMaze(theGriever.getRow(), theGriever.getCol(), Maze.UNEXPLORED);
-		solveMaze(theGriever.getRow(), theGriever.getCol());
+		if (solveMaze(theGriever.getRow(), theGriever.getCol()))
+			System.out.println(counter);
 	}
 }
