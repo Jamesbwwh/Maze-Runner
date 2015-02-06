@@ -112,6 +112,7 @@ public class Maze_Runner {
 					mazeGraphics.setSize(frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight());
 					mazeGraphics.canvasSize();
 					mazeGraphics.repaint();
+					frmMazeRunner.repaint();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
