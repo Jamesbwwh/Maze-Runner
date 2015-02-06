@@ -3,6 +3,7 @@ public class DepthFirstSearch implements Runnable {
 	private Maze theMaze;
 	private Glader theGlader;
 	private Griever theGriever;
+	private int counter;
 
 	public DepthFirstSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
@@ -19,16 +20,23 @@ public class DepthFirstSearch implements Runnable {
 		case Maze.UNEXPLORED:
 		case Maze.GRIEVER:
 			theMaze.setMaze(row, col, Maze.PATH); // Cell Assignment
+			counter++;
+			System.out.println (counter);
 			theGraphics.paintComponents(theGraphics.getGraphics());
 			theGraphics.update(theGraphics.getGraphics());
 			try { Thread.sleep(50); } catch (Exception ex) { }
 
 			// Try to solve maze by extending path in each possible direction.
 			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
+			{	
+
 				return true;
+			}
 
 			// Maze can't be solved from this cell, so backtrack out of the cell.
 			theMaze.setMaze(row, col, Maze.VISITED); // Cell Assignment
+			counter++;
+			System.out.println (counter);
 			theGraphics.paintComponents(theGraphics.getGraphics());
 			theGraphics.update(theGraphics.getGraphics());
 			try { Thread.sleep(50); } catch (Exception ex) { }
