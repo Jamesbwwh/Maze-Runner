@@ -66,7 +66,7 @@ public class Maze_Runner {
 
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
-		frmMazeRunner.add(toolBar, BorderLayout.PAGE_START);
+		frmMazeRunner.getContentPane().add(toolBar, BorderLayout.PAGE_START);
 
 		JButton btnFile = new JButton("File");
 		btnFile.addActionListener(new fileEventHandler());
@@ -75,7 +75,6 @@ public class Maze_Runner {
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//maze.printString();
 				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
 				Thread newThread = new Thread(dfs);
 				newThread.start();
@@ -86,8 +85,6 @@ public class Maze_Runner {
 		JButton btnStop = new JButton("Stop");
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maze.setMaze(1, 1, Maze.VISITED);
-				mazeGraphics.repaint();
 			}
 		});
 		toolBar.add(btnStop);
@@ -108,7 +105,7 @@ public class Maze_Runner {
 				try {
 					maze = new Maze(FileIO.loadMaze(filename));
 					mazeGraphics = new MazeGraphics(maze);
-					frmMazeRunner.add(mazeGraphics,BorderLayout.CENTER);
+					frmMazeRunner.getContentPane().add(mazeGraphics,BorderLayout.CENTER);
 					mazeGraphics.setSize(frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight());
 					mazeGraphics.canvasSize();
 					mazeGraphics.repaint();

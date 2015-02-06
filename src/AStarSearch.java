@@ -1,10 +1,10 @@
-public class DepthFirstSearch implements Runnable {
+public class AStarSearch implements Runnable {
 	private MazeGraphics theGraphics;
 	private Maze theMaze;
 	private Glader theGlader;
 	private Griever theGriever;
 
-	public DepthFirstSearch(Maze maze, MazeGraphics mg) {
+	public AStarSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
 		theMaze = maze;
 		theGlader = new Glader(theMaze);
