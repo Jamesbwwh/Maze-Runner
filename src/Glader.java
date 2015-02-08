@@ -1,3 +1,8 @@
+/*
+ * description: the ending point of the maze. The target.
+ */
+
+
 public class Glader {
 	private Maze theMaze;
 	private int row, col, speed = 3;

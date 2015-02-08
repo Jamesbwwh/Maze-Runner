@@ -1,3 +1,7 @@
+/*
+ * description: the starting point of the maze. The agent.
+ */
+
 public class Griever {
 	private Maze theMaze;
 	private int row, col, speed = 5;

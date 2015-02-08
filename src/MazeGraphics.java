@@ -13,6 +13,10 @@ public class MazeGraphics extends JPanel {
 	public MazeGraphics(Maze maze) {
 		theMaze = maze;
 	}
+	
+	/*
+	 * description: This is used to set the color of each components
+	 */
 
 	public void paint(Graphics g) {
 		for (int i = 0; i < theMaze.getRow(); i++) {
@@ -57,6 +61,10 @@ public class MazeGraphics extends JPanel {
 		cellWidth = width / theMaze.getCol();
 		cellHeight = height / theMaze.getRow();
 	}
+	
+	/*
+	 * description: This is used to update the components when it is moving
+	 */
 
 	public static void updateGraphics(MazeGraphics g) {
 		g.paintComponents(g.getGraphics());

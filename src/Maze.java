@@ -8,6 +8,10 @@ public class Maze {
 	final static int PATH = 3;
 	final static int GLADER = 4;
 	final static int GRIEVER = 5;
+	
+	/*
+	 * description: Used to set the path and the wall in the program.
+	 */
 
 	public Maze(String raw) {
 		String[] rows = raw.split("\n");

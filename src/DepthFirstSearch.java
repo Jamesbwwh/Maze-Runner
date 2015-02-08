@@ -11,6 +11,13 @@ public class DepthFirstSearch implements Runnable {
 		theGlader = new Glader(theMaze);
 		theGriever = new Griever(theMaze);
 	}
+	
+	/* 
+	 * description: This function is to solve the maze.
+	 * case: 		If it is the target, return true.
+	 * 				If it is not, move on the path until it find the target.
+	 * 				
+	 */
 
 	public boolean solveMaze(int row, int col) {
 		switch (theMaze.getMaze(row, col)) {
