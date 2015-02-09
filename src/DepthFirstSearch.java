@@ -1,15 +1,12 @@
 public class DepthFirstSearch implements Runnable {
 	private MazeGraphics theGraphics;
 	private Maze theMaze;
-	private Glader theGlader;
 	private Griever theGriever;
 	private int counter;
 
 	public DepthFirstSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
 		theMaze = maze;
-		theGlader = new Glader(theMaze);
-		theGriever = new Griever(theMaze);
 	}
 
 	/* 
@@ -41,6 +38,7 @@ public class DepthFirstSearch implements Runnable {
 	}
 
 	public Griever getGriever() { return theGriever; }
+	public void setGriever(Griever griever) { theGriever = griever; }
 
 	public void run() {
 		theMaze.setMaze(theGriever.getRow(), theGriever.getCol(), Maze.UNEXPLORED);

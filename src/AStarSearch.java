@@ -11,8 +11,6 @@ public class AStarSearch implements Runnable {
 	public AStarSearch(Maze maze, MazeGraphics mg) {
 		theGraphics = mg;
 		theMaze = maze;
-		theGlader = new Glader(theMaze);
-		theGriever = new Griever(theMaze);
 		unExplored = new ArrayList<Coordinate>();
 	}
 
@@ -62,18 +60,37 @@ public class AStarSearch implements Runnable {
 		case 4:
 			unExplored.add(new Coordinate(row, col));
 			theMaze.setMaze(row, col, Maze.VISITED);
+			Coordinate tryLoc = new Coordinate(row, col);
 			int x = theGlader.getRow() - row;
 			int y = theGlader.getCol() - col;
 			for (Coordinate fork : unExplored) {
 				int tmpx = theGlader.getRow() - fork.getRow();
 				int tmpy = theGlader.getCol() - fork.getCol();
 				if (Math.abs(tmpx + tmpy) < Math.abs(x + y)) {
+					tryLoc.setCoord(fork.getRow(), fork.getCol());
 					x = tmpx;
 					y = tmpy;
 				}
 			}
-			if (solveMaze(x, y))
-				return true;
+			if (tryLoc.getRow() == row && tryLoc.getCol() == col) {
+				for (Coordinate route : mazeSide) {
+					if (theMaze.getMaze(route.getRow(), route.getCol()) == Maze.UNEXPLORED) {
+						int tmpx = theGlader.getRow() - route.getRow();
+						int tmpy = theGlader.getCol() - route.getCol();
+						if (Math.abs(tmpx + tmpy) < Math.abs(x + y)) {
+							tryLoc.setCoord(route.getRow(), route.getCol());
+							x = tmpx;
+							y = tmpy;
+						}
+					}
+				}
+				if (solveMaze(tryLoc.getRow(), tryLoc.getCol()))
+					return true;
+			}
+			else {
+				if (solveMaze(tryLoc.getRow(), tryLoc.getCol()))
+					return true;
+			}
 			break;
 		default:
 			return false;
@@ -100,8 +117,12 @@ public class AStarSearch implements Runnable {
 	}
 
 	public Griever getGriever() { return theGriever; }
+	public void setGriever(Griever griever) { theGriever = griever; }
+	public Glader getGlader() { return theGlader; }
+	public void setGlader(Glader glader) { theGlader = glader; }
 
 	public void run() {
 		solveMaze(theGriever.getRow(), theGriever.getCol());
+		System.out.println(counter);
 	}
 }

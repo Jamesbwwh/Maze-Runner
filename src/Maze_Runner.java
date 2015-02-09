@@ -22,6 +22,9 @@ public class Maze_Runner {
 	private JTextField startFieldy;
 	private JTextField endFieldx;
 	private JTextField endFieldy;
+	private JButton btnFile;
+	private JButton btnRun;
+	private JButton btnRun2;
 
 	/*
 	 * description: This is the main function of the program. Opens up the frame window.
@@ -107,30 +110,83 @@ public class Maze_Runner {
 		toolBar.setFloatable(false);
 		frmMazeRunner.getContentPane().add(toolBar, BorderLayout.PAGE_START);
 
-		JButton btnFile = new JButton();
+		btnFile = new JButton();
 		try {
-		    Image img = ImageIO.read(getClass().getResource("file.png"));
-		    btnFile.setIcon(new ImageIcon(img));
-		  } catch (IOException ex) {
-		  }
+			Image img = ImageIO.read(getClass().getResource("file.png"));
+			btnFile.setIcon(new ImageIcon(img));
+		} catch (IOException ex) { }
+		btnFile.setText("Open");
 		btnFile.addActionListener(new fileEventHandler());
 		toolBar.add(btnFile);
 
-		JButton btnRun = new JButton();
+		btnRun = new JButton();
 		try {
-		    Image img = ImageIO.read(getClass().getResource("run.png"));
-		    btnRun.setIcon(new ImageIcon(img));
-		  } catch (IOException ex) {
-		  }
+			Image img = ImageIO.read(getClass().getResource("run.png"));
+			btnRun.setIcon(new ImageIcon(img));
+		} catch (IOException ex) { }
+		btnRun.setText("Alogrithm");
+		btnRun.setEnabled(false);
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				startFieldx.setEnabled(false);
+				startFieldy.setEnabled(false);
+				endFieldx.setEnabled(false);
+				endFieldy.setEnabled(false);
 				btnRun.setEnabled(false);
-				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
-				Thread newThread = new Thread(dfs);
+				btnRun2.setEnabled(false);
+				btnFile.setEnabled(false);
+				Glader theGlader;
+				Griever theGriever;
+				if (startFieldx.getText().equals("")) {
+					theGlader = new Glader(maze);
+					theGriever = new Griever(maze);
+				}
+				else {
+					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()), Integer.parseInt(endFieldy.getText())));
+					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()), Integer.parseInt(startFieldy.getText())));
+				}
+				AStarSearch ass = new AStarSearch(maze, mazeGraphics);
+				ass.setGriever(theGriever);
+				ass.setGlader(theGlader);
+				Thread newThread = new Thread(ass);
 				newThread.start();
 			}
 		});
 		toolBar.add(btnRun);
+
+		btnRun2 = new JButton();
+		try {
+			Image img = ImageIO.read(getClass().getResource("run.png"));
+			btnRun2.setIcon(new ImageIcon(img));
+		} catch (IOException ex) { }
+		btnRun2.setText("DFS");
+		btnRun2.setEnabled(false);
+		btnRun2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				startFieldx.setEnabled(false);
+				startFieldy.setEnabled(false);
+				endFieldx.setEnabled(false);
+				endFieldy.setEnabled(false);
+				btnRun.setEnabled(false);
+				btnRun2.setEnabled(false);
+				btnFile.setEnabled(false);
+				Glader theGlader;
+				Griever theGriever;
+				if (startFieldx.getText().equals("")) {
+					theGlader = new Glader(maze);
+					theGriever = new Griever(maze);
+				}
+				else {
+					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()), Integer.parseInt(endFieldy.getText())));
+					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()), Integer.parseInt(startFieldy.getText())));
+				}
+				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
+				dfs.setGriever(theGriever);
+				Thread newThread = new Thread(dfs);
+				newThread.start();
+			}
+		});
+		toolBar.add(btnRun2);
 
 //		JButton btnStop = new JButton();
 //		try {
@@ -169,6 +225,8 @@ public class Maze_Runner {
 					mazeGraphics.setSize(frmMazeRunner.getContentPane().getWidth(), frmMazeRunner.getContentPane().getHeight());
 					mazeGraphics.canvasSize();
 					frmMazeRunner.repaint();
+					btnRun.setEnabled(true);
+					btnRun2.setEnabled(true);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
