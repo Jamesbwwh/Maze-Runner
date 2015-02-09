@@ -11,7 +11,7 @@ public class DepthFirstSearch implements Runnable {
 		theGlader = new Glader(theMaze);
 		theGriever = new Griever(theMaze);
 	}
-	
+
 	/* 
 	 * description: This function is to solve the maze.
 	 * case: 		If it is the target, return true.

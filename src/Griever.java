@@ -15,6 +15,11 @@ public class Griever {
 		theMaze.setMaze(row, col, Maze.GRIEVER);
 	}
 
+	public Griever(Maze maze, Coordinate coord) {
+		theMaze = maze;
+		theMaze.setMaze(coord.getRow(), coord.getCol(), Maze.GRIEVER);
+	}
+
 	public int getRow() { return row; }
 	public int getCol() { return col; }
 }

@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
 public class MazeGraphics extends JPanel {
@@ -13,7 +12,7 @@ public class MazeGraphics extends JPanel {
 	public MazeGraphics(Maze maze) {
 		theMaze = maze;
 	}
-	
+
 	/*
 	 * description: This is used to set the color of each components
 	 */
@@ -61,7 +60,7 @@ public class MazeGraphics extends JPanel {
 		cellWidth = width / theMaze.getCol();
 		cellHeight = height / theMaze.getRow();
 	}
-	
+
 	/*
 	 * description: This is used to update the components when it is moving
 	 */

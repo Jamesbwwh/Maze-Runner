@@ -2,7 +2,6 @@
  * description: the ending point of the maze. The target.
  */
 
-
 public class Glader {
 	private Maze theMaze;
 	private int row, col, speed = 3;
@@ -14,6 +13,11 @@ public class Glader {
 			col = (int)(Math.random() * maze.getCol());
 		} while (theMaze.getMaze(row, col) == Maze.WALL);
 		theMaze.setMaze(row, col, Maze.GLADER);
+	}
+
+	public Glader(Maze maze, Coordinate coord) {
+		theMaze = maze;
+		theMaze.setMaze(coord.getRow(), coord.getCol(), Maze.GLADER);
 	}
 
 	public int getRow() { return row; }

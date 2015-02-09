@@ -2,26 +2,21 @@ import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.BorderLayout;
 import java.awt.Image;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Maze_Runner {
-
 	private JFrame frmMazeRunner;
 	private MazeGraphics mazeGraphics;
 	private Maze maze;
-	
+
 	/*
 	 * description: This is the main function of the program. Opens up the frame window.
 	 */
@@ -42,7 +37,7 @@ public class Maze_Runner {
 	public Maze_Runner() {
 		initialize();
 	}
-	
+
 	/*
 	 * description: This function is used to set the frame of the program. 
 	 * 				
@@ -62,7 +57,6 @@ public class Maze_Runner {
 
 		JMenuBar menuBar = new JMenuBar();
 		frmMazeRunner.setJMenuBar(menuBar);
-		
 
 		/* JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
@@ -106,6 +100,7 @@ public class Maze_Runner {
 		  }
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnRun.setEnabled(false);
 				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
 				Thread newThread = new Thread(dfs);
 				newThread.start();
@@ -126,7 +121,7 @@ public class Maze_Runner {
 //		});
 //		toolBar.add(btnStop);
 	}
-	
+
 	/*
 	 * description: This function is for selecting and opening a text file to display in the frame.
 	 */

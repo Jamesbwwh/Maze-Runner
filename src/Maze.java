@@ -8,7 +8,7 @@ public class Maze {
 	final static int PATH = 3;
 	final static int GLADER = 4;
 	final static int GRIEVER = 5;
-	
+
 	/*
 	 * description: Used to set the path and the wall in the program.
 	 */
@@ -31,12 +31,13 @@ public class Maze {
 
 	public int getRow() { return this.row; }
 	public int getCol() { return this.col; }
-	public int getMaze(int i, int j) {
-		if (i >= 0 && j >= 0 && i < row && j < col) return this.maze[i][j];
+	public int getMaze(int Row, int Column) {
+		if (Row >= 0 && Column >= 0 && Row < row && Column < col) return this.maze[Row][Column];
 		else return -1;
 		}
 
-	public void setMaze(int i, int j, int value) { this.maze[i][j] = value; }
+	public void setMaze(int Row, int Column, int value) { this.maze[Row][Column] = value; }
+	public void setMaze(Coordinate pos, int value) { this.maze[pos.getRow()][pos.getCol()] = value; }
 
 	public void printString() {
 		for (int i = 0; i < row; i++) {

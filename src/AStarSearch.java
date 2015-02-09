@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public class AStarSearch implements Runnable {
 	private MazeGraphics theGraphics;
 	private Maze theMaze;
 	private Glader theGlader;
 	private Griever theGriever;
-	private int[] unExplored;
+	private ArrayList<Coordinate> unExplored;
 	private int counter;
 
 	public AStarSearch(Maze maze, MazeGraphics mg) {
@@ -11,49 +13,72 @@ public class AStarSearch implements Runnable {
 		theMaze = maze;
 		theGlader = new Glader(theMaze);
 		theGriever = new Griever(theMaze);
-		unExplored = new int[theMaze.getRow()];
+		unExplored = new ArrayList<Coordinate>();
 	}
 
-	public void solveMaze(int row, int col) {
-		int tmp = 0;
-		int[] tmp2 = new int[8];
+	public boolean solveMaze(int row, int col) {
+		if (theMaze.getMaze(row, col) == Maze.GLADER)
+			return true;
+		ArrayList<Coordinate> mazeSide = new ArrayList<Coordinate>();
+		int sides = 0;
+		counter++;
 		// Check Top
 		if (theMaze.getMaze(row - 1, col) != Maze.WALL) {
-			tmp++;
-			tmp2[0] = row - 1;
-			tmp2[1] = col;
+			mazeSide.add(new Coordinate(row - 1, col));
+			sides++;
 		}
 		// Check Left
 		if (theMaze.getMaze(row, col - 1) != Maze.WALL) {
-			tmp++;
-			tmp2[1] = theMaze.getMaze(row - 1, col);
+			mazeSide.add(new Coordinate(row, col - 1));
+			sides++;
 		}
 		// Check Bottom
 		if (theMaze.getMaze(row + 1, col) != Maze.WALL) {
-			tmp++;
-			tmp2[2] = theMaze.getMaze(row - 1, col);
+			mazeSide.add(new Coordinate(row + 1, col));
+			sides++;
 		}
 		// Check Right
 		if (theMaze.getMaze(row, col + 1) != Maze.WALL) {
-			tmp++;
-			tmp2[3] = theMaze.getMaze(row - 1, col);
+			mazeSide.add(new Coordinate(row, col + 1));
+			sides++;
 		}
-		switch (tmp) {
-		case 1:
-			for (int i = 0; i < 4; i++)
-				if (tmp2[i] != 0)
-					solveMaze();
-			break;
+		switch (sides) {
 		case 2:
+			theMaze.setMaze(row, col, Maze.GRIEVER);
+			MazeGraphics.updateGraphics(theGraphics);
+			theMaze.setMaze(row, col, Maze.PATH);
+			for (Coordinate route : mazeSide) {
+				if (theMaze.getMaze(route.getRow(), route.getCol()) == Maze.UNEXPLORED)
+					if (solveMaze(route.getRow(), route.getCol()))
+						return true;
+			}
+			break;
+		case 1:
+			theMaze.setMaze(row, col, Maze.VISITED);
+			MazeGraphics.updateGraphics(theGraphics);
+			counter++;
+			return false;
 		case 3:
 		case 4:
-			int distx = row - theGlader.getRow();
-			int disty = col - theGlader.getCol();
-			break;
-		case 0:
+			unExplored.add(new Coordinate(row, col));
+			theMaze.setMaze(row, col, Maze.VISITED);
+			int x = theGlader.getRow() - row;
+			int y = theGlader.getCol() - col;
+			for (Coordinate fork : unExplored) {
+				int tmpx = theGlader.getRow() - fork.getRow();
+				int tmpy = theGlader.getCol() - fork.getCol();
+				if (Math.abs(tmpx + tmpy) < Math.abs(x + y)) {
+					x = tmpx;
+					y = tmpy;
+				}
+			}
+			if (solveMaze(x, y))
+				return true;
 			break;
 		default:
+			return false;
 		}
+		return false;
 //		switch (theMaze.getMaze(row, col)) {
 //		case Maze.GLADER:
 //			return true;
