@@ -6,6 +6,7 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -64,11 +65,19 @@ public class Maze_Runner {
 		JMenuBar menuBar = new JMenuBar();
 		frmMazeRunner.setJMenuBar(menuBar);
 		
+		JLabel tl1 = new JLabel("Start: ");
+		menuBar.add(tl1);
 		JTextField tf1 = new JTextField();
 		menuBar.add(tf1);
-
+		JTextField tf11 = new JTextField();
+		menuBar.add(tf11);
+		
+		JLabel tl2 = new JLabel(" End: ");
+		menuBar.add(tl2);
 		JTextField tf2 = new JTextField();
 		menuBar.add(tf2);
+		JTextField tf22 = new JTextField();
+		menuBar.add(tf22);
 		
 		JButton b1 = new JButton("Enter");
 		menuBar.add(b1);
