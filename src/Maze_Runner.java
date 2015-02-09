@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 
@@ -63,6 +64,14 @@ public class Maze_Runner {
 		JMenuBar menuBar = new JMenuBar();
 		frmMazeRunner.setJMenuBar(menuBar);
 		
+		JTextField tf1 = new JTextField();
+		menuBar.add(tf1);
+
+		JTextField tf2 = new JTextField();
+		menuBar.add(tf2);
+		
+		JButton b1 = new JButton("Enter");
+		menuBar.add(b1);
 
 		/* JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
