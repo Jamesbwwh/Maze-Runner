@@ -5,7 +5,9 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -16,6 +18,10 @@ public class Maze_Runner {
 	private JFrame frmMazeRunner;
 	private MazeGraphics mazeGraphics;
 	private Maze maze;
+	private JTextField startFieldx;
+	private JTextField startFieldy;
+	private JTextField endFieldx;
+	private JTextField endFieldy;
 
 	/*
 	 * description: This is the main function of the program. Opens up the frame window.
@@ -57,6 +63,24 @@ public class Maze_Runner {
 
 		JMenuBar menuBar = new JMenuBar();
 		frmMazeRunner.setJMenuBar(menuBar);
+		
+		JLabel lblStart = new JLabel("Start: ");
+		menuBar.add(lblStart);
+		
+		startFieldx = new JTextField();
+		menuBar.add(startFieldx);
+		
+		startFieldy = new JTextField();
+		menuBar.add(startFieldy);
+		
+		JLabel lblEnd = new JLabel("End: ");
+		menuBar.add(lblEnd);
+		
+		endFieldx = new JTextField();
+		menuBar.add(endFieldx);
+		
+		endFieldy = new JTextField();
+		menuBar.add(endFieldy);
 
 		/* JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
