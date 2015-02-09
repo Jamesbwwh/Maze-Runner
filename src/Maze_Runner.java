@@ -113,18 +113,18 @@ public class Maze_Runner {
 		});
 		toolBar.add(btnRun);
 
-		JButton btnStop = new JButton();
-		try {
-		    Image img = ImageIO.read(getClass().getResource("stop.png"));
-		    btnStop.setIcon(new ImageIcon(img));
-		  } catch (IOException ex) {
-		  }
-		btnStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		toolBar.add(btnStop);
+//		JButton btnStop = new JButton();
+//		try {
+//		    Image img = ImageIO.read(getClass().getResource("stop.png"));
+//		    btnStop.setIcon(new ImageIcon(img));
+//		  } catch (IOException ex) {
+//		  }
+//		btnStop.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				System.exit(0);
+//			}
+//		});
+//		toolBar.add(btnStop);
 	}
 	
 	/*
