@@ -142,8 +142,8 @@ public class Maze_Runner {
 					theGriever = new Griever(maze);
 				}
 				else {
-					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()), Integer.parseInt(endFieldy.getText())));
-					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()), Integer.parseInt(startFieldy.getText())));
+					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()) - 1, Integer.parseInt(endFieldy.getText()) - 1));
+					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()) - 1, Integer.parseInt(startFieldy.getText()) - 1));
 				}
 				AStarSearch ass = new AStarSearch(maze, mazeGraphics);
 				ass.setGriever(theGriever);
@@ -177,8 +177,8 @@ public class Maze_Runner {
 					theGriever = new Griever(maze);
 				}
 				else {
-					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()), Integer.parseInt(endFieldy.getText())));
-					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()), Integer.parseInt(startFieldy.getText())));
+					theGlader = new Glader(maze, new Coordinate(Integer.parseInt(endFieldx.getText()) - 1, Integer.parseInt(endFieldy.getText()) - 1));
+					theGriever = new Griever(maze, new Coordinate(Integer.parseInt(startFieldx.getText()) - 1, Integer.parseInt(startFieldy.getText()) - 1));
 				}
 				DepthFirstSearch dfs = new DepthFirstSearch(maze, mazeGraphics);
 				dfs.setGriever(theGriever);

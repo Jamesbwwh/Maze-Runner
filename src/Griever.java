@@ -17,6 +17,8 @@ public class Griever {
 
 	public Griever(Maze maze, Coordinate coord) {
 		theMaze = maze;
+		row = coord.getRow();
+		col = coord.getCol();
 		theMaze.setMaze(coord.getRow(), coord.getCol(), Maze.GRIEVER);
 	}
 
