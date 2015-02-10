@@ -17,103 +17,130 @@ public class AStarSearch implements Runnable {
 	public boolean solveMaze(int row, int col) {
 		if (theMaze.getMaze(row, col) == Maze.GLADER)
 			return true;
-		ArrayList<Coordinate> mazeSide = new ArrayList<Coordinate>();
 		int sides = 0;
-		counter++;
-		// Check Top
-		if (theMaze.getMaze(row - 1, col) != Maze.WALL) {
-			mazeSide.add(new Coordinate(row - 1, col));
+		if (theMaze.getMaze(row - 1, col) != Maze.WALL)
 			sides++;
-		}
-		// Check Left
-		if (theMaze.getMaze(row, col - 1) != Maze.WALL) {
-			mazeSide.add(new Coordinate(row, col - 1));
+		if (theMaze.getMaze(row, col - 1) != Maze.WALL)
 			sides++;
-		}
-		// Check Bottom
-		if (theMaze.getMaze(row + 1, col) != Maze.WALL) {
-			mazeSide.add(new Coordinate(row + 1, col));
+		if (theMaze.getMaze(row + 1, col) != Maze.WALL)
 			sides++;
-		}
-		// Check Right
-		if (theMaze.getMaze(row, col + 1) != Maze.WALL) {
-			mazeSide.add(new Coordinate(row, col + 1));
+		if (theMaze.getMaze(row, col + 1) != Maze.WALL)
 			sides++;
-		}
 		switch (sides) {
 		case 2:
 			theMaze.setMaze(row, col, Maze.GRIEVER);
 			MazeGraphics.updateGraphics(theGraphics);
 			theMaze.setMaze(row, col, Maze.PATH);
-			for (Coordinate route : mazeSide) {
-				if (theMaze.getMaze(route.getRow(), route.getCol()) == Maze.UNEXPLORED)
-					if (solveMaze(route.getRow(), route.getCol()))
-						return true;
+			if (theMaze.getMaze(row - 1, col) == Maze.UNEXPLORED) {
+				if (solveMaze(row - 1, col))
+					return true;
+			}
+			if (theMaze.getMaze(row, col - 1) == Maze.UNEXPLORED) {
+				if (solveMaze(row, col - 1))
+					return true;
+			}
+			if (theMaze.getMaze(row + 1, col) == Maze.UNEXPLORED) {
+				if (solveMaze(row + 1, col))
+					return true;
+			}
+			if (theMaze.getMaze(row, col + 1) == Maze.UNEXPLORED) {
+				if (solveMaze(row, col + 1))
+					return true;
 			}
 			break;
 		case 1:
 			theMaze.setMaze(row, col, Maze.VISITED);
 			MazeGraphics.updateGraphics(theGraphics);
-			counter++;
 			return false;
 		case 3:
 		case 4:
-			unExplored.add(new Coordinate(row, col));
-			theMaze.setMaze(row, col, Maze.VISITED);
+			if (!unExplored.contains(new Coordinate(row, col)))
+				unExplored.add(new Coordinate(row, col));
 			Coordinate tryLoc = new Coordinate(row, col);
-			int x = theGlader.getRow() - row;
-			int y = theGlader.getCol() - col;
 			for (Coordinate fork : unExplored) {
-				int tmpx = theGlader.getRow() - fork.getRow();
-				int tmpy = theGlader.getCol() - fork.getCol();
-				if (Math.abs(tmpx + tmpy) < Math.abs(x + y)) {
-					tryLoc.setCoord(fork.getRow(), fork.getCol());
-					x = tmpx;
-					y = tmpy;
+				sides = 0;
+				if (theMaze.getMaze(fork.getRow() - 1, fork.getCol()) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow(), fork.getCol() - 1) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow() + 1, fork.getCol()) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow(), fork.getCol() + 1) == Maze.UNEXPLORED)
+					sides++;
+				if (sides > 0) {
+					int tmpx = theGlader.getRow() - fork.getRow();
+					int tmpy = theGlader.getCol() - fork.getCol();
+					if (Math.abs(tmpx + tmpy) < Math.abs(theGlader.getRow() - tryLoc.getRow() + theGlader.getCol() - tryLoc.getCol()))
+						tryLoc.setCoord(fork.getRow(), fork.getCol());
 				}
 			}
-			if (tryLoc.getRow() == row && tryLoc.getCol() == col) {
-				for (Coordinate route : mazeSide) {
-					if (theMaze.getMaze(route.getRow(), route.getCol()) == Maze.UNEXPLORED) {
-						int tmpx = theGlader.getRow() - route.getRow();
-						int tmpy = theGlader.getCol() - route.getCol();
-						if (Math.abs(tmpx + tmpy) < Math.abs(x + y)) {
-							tryLoc.setCoord(route.getRow(), route.getCol());
-							x = tmpx;
-							y = tmpy;
-						}
-					}
+			int xDiff = theGlader.getRow() - tryLoc.getRow();
+			int yDiff = theGlader.getCol() - tryLoc.getCol();
+			boolean up = false, down = false, left = false, right = false;
+			if (theMaze.getMaze(tryLoc.getRow() - 1, tryLoc.getCol()) == Maze.UNEXPLORED)
+				up = true;
+			if (theMaze.getMaze(tryLoc.getRow(), tryLoc.getCol() - 1) == Maze.UNEXPLORED)
+				left = true;
+			if (theMaze.getMaze(tryLoc.getRow() + 1, tryLoc.getCol()) == Maze.UNEXPLORED)
+				down = true;
+			if (theMaze.getMaze(tryLoc.getRow(), tryLoc.getCol() + 1) == Maze.UNEXPLORED)
+				right = true;
+			if (Math.abs(xDiff) < Math.abs(yDiff)) {
+				if (right && xDiff > 0) {
+					if (solveMaze(tryLoc.getRow(), tryLoc.getCol() + 1))
+						return true;
 				}
-				if (solveMaze(tryLoc.getRow(), tryLoc.getCol()))
-					return true;
+				if (left && xDiff < 0) {
+					if (solveMaze(tryLoc.getRow(), tryLoc.getCol() - 1))
+						return true;
+				}
+				if (up && yDiff > 0) {
+					if (solveMaze(tryLoc.getRow() + 1, tryLoc.getCol()))
+						return true;
+				}
+				if (down && yDiff < 0) {
+					if (solveMaze(tryLoc.getRow() - 1, tryLoc.getCol()))
+						return true;
+				}
 			}
 			else {
-				if (solveMaze(tryLoc.getRow(), tryLoc.getCol()))
-					return true;
+				if (up && yDiff > 0) {
+					if (solveMaze(tryLoc.getRow() + 1, tryLoc.getCol()))
+						return true;
+				}
+				if (down && yDiff < 0) {
+					if (solveMaze(tryLoc.getRow() - 1, tryLoc.getCol()))
+						return true;
+				}
+				if (right && xDiff > 0) {
+					if (solveMaze(tryLoc.getRow(), tryLoc.getCol() + 1))
+						return true;
+				}
+				if (left && xDiff < 0) {
+					if (solveMaze(tryLoc.getRow(), tryLoc.getCol() - 1))
+						return true;
+				}
+			}
+			for (Coordinate fork : unExplored) {
+				sides = 0;
+				if (theMaze.getMaze(fork.getRow() - 1, fork.getCol()) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow(), fork.getCol() - 1) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow() + 1, fork.getCol()) == Maze.UNEXPLORED)
+					sides++;
+				if (theMaze.getMaze(fork.getRow(), fork.getCol() + 1) == Maze.UNEXPLORED)
+					sides++;
+				if (sides > 0) {
+					if (solveMaze(fork.getRow(), fork.getCol()))
+						return true;
+				}
 			}
 			break;
 		default:
 			return false;
 		}
 		return false;
-//		switch (theMaze.getMaze(row, col)) {
-//		case Maze.GLADER:
-//			return true;
-//		case Maze.UNEXPLORED:
-//			counter++;
-//			theMaze.setMaze(row, col, Maze.GRIEVER);
-//			MazeGraphics.updateGraphics(theGraphics);
-//			theMaze.setMaze(row, col, Maze.PATH);
-//			// Recursion
-//			if (solveMaze(row - 1, col) || solveMaze(row, col - 1) || solveMaze(row + 1, col) || solveMaze(row, col + 1))
-//				return true;
-//			// Backtrack
-//			theMaze.setMaze(row, col, Maze.VISITED);
-//			MazeGraphics.updateGraphics(theGraphics);
-//			counter++;
-//		default:
-//			return false;
-//		}
 	}
 
 	public Griever getGriever() { return theGriever; }
@@ -122,7 +149,7 @@ public class AStarSearch implements Runnable {
 	public void setGlader(Glader glader) { theGlader = glader; }
 
 	public void run() {
-		solveMaze(theGriever.getRow(), theGriever.getCol());
+		System.out.println(solveMaze(theGriever.getRow(), theGriever.getCol()));
 		System.out.println(counter);
 	}
 }
