@@ -1,6 +1,24 @@
-#include <iostream>
-#include <sstream>
+#include "stdafx.h"
 #include "Maze.h"
+
+Maze::Maze()
+{
+}
+
+Maze::Maze(int row, int col)
+{
+	this->row = row;
+	this->col = col;
+	maze.resize(this->row);
+	for (int i = 0; i < this->row; i++)
+	{
+		maze[i].resize(this->col);
+		for (int j = 0; j < this->col; j++)
+		{
+			maze[i][j] = Maze::WALL;
+		}
+	}
+}
 
 Maze::Maze(string raw)
 {

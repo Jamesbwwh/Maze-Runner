@@ -1,46 +1,51 @@
+#include "stdafx.h"
 #include "MazeGraphics.h"
-//#include "Maze.h"
 
-using namespace MazeRunner;
+const COLORREF MazeGraphics::color[] = { RGB(255, 255, 255), RGB(0, 0, 0), RGB(255, 255, 0), RGB(255, 0, 0), RGB(255, 192, 203), RGB(255, 165, 0) };
 
-//MazeGraphics::MazeGraphics(Maze maze) {
-//	theMaze = &maze;
-//}
+MazeGraphics::MazeGraphics() {
+}
 
-void MazeGraphics::paint(Graphics^ g) {
-	Pen^ thePen;
+MazeGraphics::MazeGraphics(Maze *maze) {
+	this->theMaze = maze;
+}
+
+void MazeGraphics::paint(HDC hdc) {
+	HPEN thePen;
 	for (int i = 0; i < (*theMaze).getRow(); i++) {
 		for (int j = 0; j < (*theMaze).getCol(); j++) {
 			switch ((*theMaze).getMaze(i, j)) {
 			case Maze::WALL:
-				thePen = gcnew Pen(*color[Maze::WALL]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::WALL]);
 				break;
 			case Maze::UNEXPLORED:
 			case Maze::GLADER:
-				thePen = gcnew Pen(*color[Maze::UNEXPLORED]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::UNEXPLORED]);
 				break;
 			case Maze::VISITED:
-				thePen = gcnew Pen(*color[Maze::VISITED]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::VISITED]);
 				break;
 			case Maze::PATH:
 			case Maze::GRIEVER:
-				thePen = gcnew Pen(*color[Maze::PATH]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::PATH]);
 				break;
 			default:
 				break;
 			}
-			g->DrawRectangle(thePen, j * cellWidth + left, i * cellHeight + top, cellWidth, cellHeight);
+			SelectObject(hdc, thePen);
+			Rectangle(hdc, j * cellWidth + left, i * cellHeight + top, cellWidth, cellHeight);
 			switch ((*theMaze).getMaze(i, j)) {
 			case Maze::GLADER:
-				thePen = gcnew Pen(*color[Maze::GLADER]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::GLADER]);
 				break;
 			case Maze::GRIEVER:
-				thePen = gcnew Pen(*color[Maze::GRIEVER]);
+				thePen = CreatePen(PS_SOLID, 2, color[Maze::GRIEVER]);
 				break;
 			default:
 				break;
 			}
-			g->DrawEllipse(thePen, j * cellWidth + left, i * cellHeight + top, cellWidth, cellHeight);
+			SelectObject(hdc, thePen);
+			Ellipse(hdc, j * cellWidth + left, i * cellHeight + top, cellWidth, cellHeight);
 		}
 	}
 }
@@ -48,8 +53,8 @@ void MazeGraphics::paint(Graphics^ g) {
 void MazeGraphics::canvasSize() {
 	left = 0;
 	top = 35;
-	width = this->Size.Width - left;
-	height = this->Size.Height - top;
+	width = 300 - left;
+	height = 300 - top;
 	cellWidth = width / (*theMaze).getCol();
 	cellHeight = height / (*theMaze).getRow();
 }

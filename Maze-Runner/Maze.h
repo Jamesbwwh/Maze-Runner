@@ -1,5 +1,4 @@
-#include <vector>
-#include <string>
+#include "stdafx.h"
 
 using namespace std;
 
@@ -18,7 +17,9 @@ public:
 	static const int GLADER = 4;
 	static const int GRIEVER = 5;
 
+	Maze();
 	Maze(string);
+	Maze(int, int);
 	int getRow();
 	int getCol();
 	int getMaze(int, int);
