@@ -68,6 +68,5 @@ public class MazeGraphics extends JPanel {
 	public static void updateGraphics(MazeGraphics g) {
 		g.paintComponents(g.getGraphics());
 		g.update(g.getGraphics());
-		try { Thread.sleep(100); } catch (Exception ex) { }
 	}
 }
