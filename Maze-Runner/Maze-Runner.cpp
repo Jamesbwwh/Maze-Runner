@@ -167,9 +167,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		Rectangle(hdc, 30, 30, 100, 100);
-		Rectangle(hdc, 60, 60, 100, 100);
-		if (maze.getMaze(0, 0) != -1)
+		//Rectangle(hdc, 30, 30, 100, 100);
+		//Rectangle(hdc, 60, 60, 100, 100);
+		if (maze.getMaze(0,0) != -1)
 		{
 			mazeGraphics.paint(hdc);
 		}

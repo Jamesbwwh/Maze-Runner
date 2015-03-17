@@ -3,35 +3,64 @@
 
 void HAK::generate(Maze maze) {
 	srand(time(NULL));
-	stack<pair<int, int>> theStack;
-	theStack.push({ rand() % maze.getRow(), rand() % maze.getCol() });
-	while (!theStack.empty())
+	pair<int, int> value = { rand() % maze.getRow(), rand() % maze.getCol() };
+	while (true)
 	{
-		pair<int, int> value = theStack.top();
-		theStack.pop();
 		maze.setMaze(value.first, value.second, Maze::UNEXPLORED);
 		vector<pair<int, int>> tmpVector;
-		if (maze.getMaze[value.first][value.second - 1] == Maze::WALL)
+		if (maze.getMaze(value.first, value.second - 1) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first, value.second - 1 });
 		}
-		if (maze.getMaze[value.first - 1][value.second] == Maze::WALL)
+		if (maze.getMaze(value.first - 1, value.second) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first - 1, value.second });
 		}
-		if (maze.getMaze[value.first][value.second + 1] == Maze::WALL)
+		if (maze.getMaze(value.first, value.second + 1) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first, value.second + 1 });
 		}
-		if (maze.getMaze[value.first + 1][value.second] == Maze::WALL)
+		if (maze.getMaze(value.first + 1, value.second) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first + 1, value.second });
 		}
-		while (!tmpVector.empty())
+		if (tmpVector.empty())
 		{
-			int random = rand() % tmpVector.size();
-			theStack.push(tmpVector[random]);
-			tmpVector.erase(tmpVector.begin() + random);
+			for (int i = 0; i < maze.getRow(); i++)
+			{
+				for (int j = 0; j < maze.getCol(); j++)
+				{
+					if (maze.getMaze(i, j) == Maze::WALL)
+					{
+						if (maze.getMaze(value.first, value.second - 1) == Maze::WALL)
+						{
+							tmpVector.push_back({ value.first, value.second - 1 });
+						}
+						if (maze.getMaze(value.first - 1, value.second) == Maze::WALL)
+						{
+							tmpVector.push_back({ value.first - 1, value.second });
+						}
+						if (maze.getMaze(value.first, value.second + 1) == Maze::WALL)
+						{
+							tmpVector.push_back({ value.first, value.second + 1 });
+						}
+						if (maze.getMaze(value.first + 1, value.second) == Maze::WALL)
+						{
+							tmpVector.push_back({ value.first + 1, value.second });
+						}
+						if (!tmpVector.empty())
+						{
+							break;
+						}
+					}
+				}
+				if (!tmpVector.empty())
+				{
+					break;
+				}
+			}
+			break;
 		}
+		value = tmpVector[rand() % (tmpVector.size() - 1)];
 	}
 }

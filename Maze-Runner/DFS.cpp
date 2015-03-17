@@ -11,25 +11,25 @@ void DFS::generate(Maze maze) {
 		theStack.pop();
 		maze.setMaze(value.first, value.second, Maze::UNEXPLORED);
 		vector<pair<int, int>> tmpVector;
-		if (maze.getMaze[value.first][value.second - 1] == Maze::WALL)
+		if (maze.getMaze(value.first, value.second - 1) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first, value.second - 1 });
 		}
-		if (maze.getMaze[value.first - 1][value.second] == Maze::WALL)
+		if (maze.getMaze(value.first - 1, value.second) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first - 1, value.second });
 		}
-		if (maze.getMaze[value.first][value.second + 1] == Maze::WALL)
+		if (maze.getMaze(value.first, value.second + 1) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first, value.second + 1 });
 		}
-		if (maze.getMaze[value.first + 1][value.second] == Maze::WALL)
+		if (maze.getMaze(value.first + 1, value.second) == Maze::WALL)
 		{
 			tmpVector.push_back({ value.first + 1, value.second });
 		}
 		while (!tmpVector.empty())
 		{
-			int random = rand() % tmpVector.size();
+			int random = rand() % (tmpVector.size() - 1);
 			theStack.push(tmpVector[random]);
 			tmpVector.erase(tmpVector.begin() + random);
 		}
