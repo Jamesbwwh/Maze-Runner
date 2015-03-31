@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include <vector>
 
 using namespace std;
 
@@ -17,7 +17,6 @@ public:
 	static const int GLADER = 4;
 	static const int GRIEVER = 5;
 
-	Maze();
 	Maze(string);
 	Maze(int, int);
 	int getRow();
@@ -25,5 +24,6 @@ public:
 	int getMaze(int, int);
 	void setMaze(int, int, int);
 	void printString();
+	string returnString();
 };
 #endif

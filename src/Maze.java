@@ -9,10 +9,6 @@ public class Maze {
 	final static int GLADER = 4;
 	final static int GRIEVER = 5;
 
-	/*
-	 * description: Used to set the path and the wall in the program.
-	 */
-
 	public Maze(String raw) {
 		String[] rows = raw.split("\n");
 		row = rows.length;
@@ -21,10 +17,9 @@ public class Maze {
 		for (int i = 0; i < row; i++) {
 			char[] columns = rows[i].toCharArray();
 			for (int j = 0; j < col; j++) {
-				if (columns[j] == '1')
-					maze[i][j] = 1;
-				else
-					maze[i][j] = 0;
+				if (columns[j] == 'B') maze[i][j] = Maze.UNEXPLORED;
+				else if (columns[j] == 'E') maze[i][j] = Maze.GLADER;
+				else maze[i][j] = Maze.WALL;
 			}
 		}
 	}
@@ -37,14 +32,43 @@ public class Maze {
 		}
 
 	public void setMaze(int Row, int Column, int value) { this.maze[Row][Column] = value; }
-	public void setMaze(Coordinate pos, int value) { this.maze[pos.getRow()][pos.getCol()] = value; }
 
 	public void printString() {
 		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				System.out.print(maze[i][j]);
-			}
+			for (int j = 0; j < col; j++) System.out.print(maze[i][j]);
 			System.out.println();
 		}
+	}
+
+	public String returnString() {
+		String returnStr = "";
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				switch (maze[i][j]) {
+				case Maze.WALL:
+					returnStr += 'A';
+					break;
+				case Maze.UNEXPLORED:
+					returnStr += 'B';
+					break;
+				case Maze.VISITED:
+					returnStr += 'C';
+					break;
+				case Maze.PATH:
+					returnStr += 'D';
+					break;
+				case Maze.GLADER:
+					returnStr += 'E';
+					break;
+				case Maze.GRIEVER:
+					returnStr += 'F';
+					break;
+				default:
+					break;
+				}
+			}
+			returnStr += " \n";
+		}
+		return returnStr;
 	}
 }
